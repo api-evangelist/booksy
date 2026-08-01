@@ -1,0 +1,72 @@
+generated: '2026-07-31'
+method: derived
+source: https://docs.booksy.com/v01.html
+derivation: derived from the published Booksy Public API reference plus live
+  anonymous probes of the production host
+standards:
+- id: rest-json
+  conforms: true
+  evidence: >-
+    "The Booksy API is organized around REST. Our API has predictable
+    resource-oriented URLs, returns JSON-encoded responses and uses standard HTTP
+    response codes, authentication and verbs."
+- id: rfc7519-jwt
+  conforms: true
+  evidence: partner assertion and access/refresh tokens are JSON Web Tokens
+- id: rfc7518-rs256
+  conforms: true
+  evidence: partner assertions are signed RS256 with an RSA key pair
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: access token is presented in an Authorization header as a Bearer token
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No OAuth 2.0 authorization server metadata, authorization endpoint or scope set
+    is published; the documented model is a partner JWT assertion exchanged at
+    /token/. Third-party indexes of the gated docs mention an authorization-code
+    flow but that could not be verified anonymously.
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    error bodies are vendor-shaped — a detail field, or a status_code / code /
+    description triple — not application/problem+json
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document is published. Probed /openapi.json,
+    /openapi.yaml, /swagger.json, /v1/openapi.json, /api-docs, /docs, /redoc,
+    /schema/ and ?format=openapi on us.booksy.com and api.booksy.com — all 404 or
+    redirect; docs.booksy.com returns 401 to anonymous clients.
+- id: asyncapi
+  conforms: false
+  evidence: a webhook is documented in prose; no AsyncAPI document is published
+- id: graphql
+  conforms: false
+- id: mcp
+  conforms: false
+  evidence: no Model Context Protocol server is published by Booksy
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 403 or 404 on
+    booksy.com, us.booksy.com, biz.booksy.com, blog.booksy.com and 401 on
+    docs.booksy.com
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt is absent on every Booksy host probed
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no deprecation or sunset policy is published
+- id: http-media-type-versioning
+  conforms: true
+  evidence: version is negotiated with a media-type parameter on the Accept header
+compliance_program:
+  trust_center: https://trust.booksy.com/
+  certifications_published: unverified
+  note: >-
+    Booksy operates a Vanta-hosted Trust Center, but the report body is rendered
+    client side and no certification names could be read anonymously, so no
+    certification is asserted and no Compliance pointer is wired.

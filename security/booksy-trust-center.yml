@@ -1,0 +1,26 @@
+generated: '2026-07-31'
+method: probed
+probe: true
+url: https://trust.booksy.com/
+platform: Vanta Trust Report
+title: Booksy Trust Center
+certifications: []
+certifications_note: >-
+  The trust report is a client-rendered single-page application (Vanta assets, trust
+  report slug mnpivg9iepkhdfbhlndvcc). No certification names, audit reports or
+  subprocessor lists could be read from the anonymous HTTP response, so none are
+  asserted here. Confirm SOC 2 / ISO 27001 / PCI DSS status directly with Booksy
+  before relying on it.
+vulnerability_disclosure:
+  published: false
+  note: >-
+    No /.well-known/security.txt and no responsible-disclosure or bug-bounty page
+    was found on booksy.com, biz.booksy.com, us.booksy.com or docs.booksy.com.
+x-evidence:
+- fetched: '2026-07-31'
+  url: https://trust.booksy.com/
+  http_status: 200
+  content_type: text/html
+  markers:
+  - vanta trust report asset host
+  - page title "Booksy Trust Center"

@@ -1,0 +1,60 @@
+generated: '2026-07-31'
+method: probed
+source: live anonymous GETs on 2026-07-31
+result: none found
+note: >-
+  Every /.well-known/ document probed across all Booksy hosts missed. booksy.com
+  answers /.well-known/* with an S3-style 403 XML error, us.booksy.com and
+  blog.booksy.com return 404, biz.booksy.com returns an "Invalid .well-known
+  request" 404 page, and docs.booksy.com is HTTP Basic gated (401). No raw files
+  were saved and no WellKnown or SecurityTxt pointer is wired, because there is
+  nothing to point at.
+hosts:
+- host: https://booksy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://us.booksy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://biz.booksy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://blog.booksy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.booksy.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401

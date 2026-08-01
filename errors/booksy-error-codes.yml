@@ -1,0 +1,67 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+note: >-
+  Captured from the published Booksy Public API "Errors" reference (docs.booksy.com
+  is HTTP Basic gated; the identical rendering was read from
+  https://web.archive.org/web/20220706184310/https://alpha.docs.booksy.net/) and
+  corroborated with live anonymous responses from the production host.
+format: vendor
+rfc9457: false
+envelopes:
+- shape: '{"detail": "<message>"}'
+  observed_status: 401
+  observed_at: https://us.booksy.com/public-api/us/business/
+  example: '{"detail":"Authentication credentials were not provided."}'
+- shape: '{"status_code": <int>, "code": "<slug>", "description": "<message>"}'
+  observed_status: 404
+  observed_at: https://us.booksy.com/public-api/us/schema/
+  example: '{"status_code": 404, "code": "not_found", "description": "Requested object
+    not found"}'
+errors:
+- status: 400
+  title: Bad Request
+  meaning: Your request is invalid.
+- status: 401
+  title: Unauthorized
+  meaning: Your API key is wrong.
+  remediation: Re-sign the RS256 partner assertion and exchange it at /token/ for a
+    fresh access token; access tokens live 5 minutes.
+- status: 403
+  title: Forbidden
+  meaning: The resource requested is not available for current partner.
+- status: 404
+  title: Not Found
+  meaning: The specified resource could not be found.
+- status: 405
+  title: Method Not Allowed
+  meaning: You tried to access a resource with an invalid method.
+- status: 406
+  title: Not Acceptable
+  meaning: You requested a format that isn't json.
+  remediation: Send an Accept header of the form "application/json; version=0.3".
+- status: 409
+  title: Conflict
+  meaning: The specified resource is not available in this time.
+  remediation: Re-read availability from the business or resource schedule before
+    retrying a booking.
+- status: 422
+  title: Unprocessable Entity
+  meaning: You can't modify repeating or multi booking.
+- status: 429
+  title: Too Many Requests
+  meaning: You're requesting too much for specific resource! Slow down!
+  remediation: Back off until the per-minute window resets; see
+    rate-limits/booksy-rate-limits.yml.
+- status: 500
+  title: Internal Server Error
+  meaning: We had a problem with our server. Try again later.
+- status: 502
+  title: Bad Gateway
+  meaning: Something went wrong. Probably one of services underneath can't respond.
+- status: 503
+  title: Service Unavailable
+  meaning: We're temporarily offline for maintenance. Please try again later.
+- status: 504
+  title: Gateway Timeout
+  meaning: Something went wrong we can't response in given timeout.

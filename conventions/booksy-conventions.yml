@@ -1,0 +1,129 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+note: >-
+  docs.booksy.com is HTTP Basic gated; conventions captured from the identical
+  publicly archived rendering at
+  https://web.archive.org/web/20220706184310/https://alpha.docs.booksy.net/ and
+  corroborated with live anonymous probes of the production API host.
+style:
+  architecture: REST
+  media_type: application/json
+  url_shape: resource-oriented, trailing slash on every documented path
+  base_url_pattern: https://<country_code>.booksy.com/public-api/<country_code>/
+  country_scoping: >-
+    The API is deployed per country and the country code appears twice — once in the
+    host label and once as the first path segment (for example
+    https://us.booksy.com/public-api/us/business/ and
+    https://pl.booksy.com/public-api/pl/business/).
+authentication:
+  style: bearer JWT obtained by exchanging a partner-signed RS256 assertion
+  header: Authorization
+  detail: authentication/booksy-authentication.yml
+versioning:
+  style: media-type parameter on the Accept header
+  header: Accept
+  example: application/json; version=0.3
+  versions:
+  - '0.1'
+  - '0.2'
+  - '0.3'
+  current: '0.3'
+  required: true
+  note: Booksy expects the version number to be included in all API requests.
+pagination:
+  style: offset-limit
+  params:
+  - offset
+  - limit
+  applies_to:
+  - GET /business/<business_id>/customer/
+  - GET /business/<business_id>/appointment/
+  note: >-
+    Documented on the collection endpoints that accept them; the docs do not publish
+    a global default or maximum page size.
+filtering:
+  style: query parameters
+  examples:
+  - booked_from / booked_till on appointment listing
+  - date_from / date_to on custom schedule listing
+  - created_before / created_after on review statistics
+  - imported (boolean) on review statistics
+external_identifiers:
+  field: import_uid
+  description: >-
+    Objects created through an import carry an import_uid supplied by the partner,
+    and dedicated "mapping" endpoints resolve a partner-side identifier to a Booksy
+    object.
+  mapping_endpoints:
+  - POST /business/mapping/
+  - POST /business/<business_id>/service/mapping/
+  - POST /business/<business_id>/service_category/mapping/
+  - POST /business/<business_id>/appointment/mapping/
+  - POST /business/<business_id>/staff_email/
+  - POST /business/<business_id>/resource/staff_email/
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  note: >-
+    Booksy publishes no idempotency-key contract. The mapping endpoints and the
+    import_uid field give a partner a way to resolve its own identifiers to Booksy
+    objects after an import, but that is external-identifier reconciliation, not
+    request idempotency, so no Idempotency pointer is wired for this provider.
+error_envelope:
+  documented_codes:
+  - 400
+  - 401
+  - 403
+  - 404
+  - 405
+  - 406
+  - 409
+  - 422
+  - 429
+  - 500
+  - 502
+  - 503
+  - 504
+  observed_shapes:
+  - shape: '{"detail": "<message>"}'
+    example_status: 401
+    source: https://us.booksy.com/public-api/us/business/
+  - shape: '{"status_code": <int>, "code": "<slug>", "description": "<message>"}'
+    example_status: 404
+    source: https://us.booksy.com/public-api/us/schema/
+  rfc9457: false
+  detail: errors/booksy-error-codes.yml
+rate_limiting:
+  signalled_by: HTTP 429
+  documented_limits:
+  - unauthenticated 10 requests per minute
+  - authenticated 200 requests per minute
+  response_headers_documented: false
+  detail: rate-limits/booksy-rate-limits.yml
+webhooks:
+  supported: true
+  expected_response: HTTP 200
+  retry: exponential backoff at 5, 10, 20 and 40 minutes after the first attempt
+  detail: asyncapi/booksy-appointment-webhooks.yml
+environments:
+  detail: sandbox/booksy-sandbox.yml
+localization:
+  language_codes:
+  - da
+  - de
+  - en
+  - es
+  - fi
+  - nb
+  - pl
+  - pt
+  - ru
+  timezones: business_timezone is carried on appointment payloads (IANA form, e.g.
+    Europe/Warsaw)
+date_time:
+  local_format: YYYY-MM-DDTHH:MM
+  utc_format: ISO 8601 with Z suffix on audit fields such as created
+enum_style: >-
+  Most status and type fields are single-character codes with a published meaning
+  table (for example appointment status A/C/D/F/M/N/P/W and appointment type B/C/R).

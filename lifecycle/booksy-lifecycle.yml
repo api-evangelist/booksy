@@ -1,0 +1,40 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+versioning:
+  scheme: media-type parameter on the Accept header
+  example: application/json; version=0.3
+  current: '0.3'
+  supported:
+  - '0.1'
+  - '0.2'
+  - '0.3'
+  docs: https://docs.booksy.com/
+  note: >-
+    The documentation publishes an "Available versions" switcher for v0.3 (latest),
+    v0.2 and v0.1; older versions remain callable by changing the Accept header.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: No deprecation or sunset policy is published for the Booksy Public API; older
+    Accept-header versions are simply listed as still available.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.booksy.com/
+status_page_platform: Atlassian Statuspage
+status_page_components:
+- Booksy Biz
+- Booksy for Customers
+- Payments
+- Booksy Website
+status_page_history: https://status.booksy.com/history
+status_page_uptime: https://status.booksy.com/uptime
+change_log: https://biz.booksy.com/whats-new
+deprecated_operations: []
+x-evidence:
+- fetched: '2026-07-31'
+  url: https://status.booksy.com/
+  http_status: 200

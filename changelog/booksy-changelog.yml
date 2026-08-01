@@ -1,0 +1,33 @@
+generated: '2026-07-31'
+method: searched
+source: https://biz.booksy.com/whats-new
+url: https://biz.booksy.com/whats-new
+scheme: dated product release notes (Booksy Biz "What's new")
+covers: product releases for the Booksy Biz application and consumer marketplace
+api_changelog: false
+api_changelog_note: >-
+  Booksy publishes no separate changelog for the Booksy Public API; API change
+  signalling is the Accept-header version list (0.1 / 0.2 / 0.3) recorded in
+  lifecycle/booksy-lifecycle.yml.
+window: recent entries as published on 2026-07-31
+entries:
+- date: '2026-04-22'
+  title: WhatsApp shortcut on client cards for easier communication
+  type: addition
+  breaking: false
+- date: '2026-04-10'
+  title: Staff ratings during booking
+  type: addition
+  breaking: false
+- date: '2026-04-03'
+  title: Say goodbye to failed cancellation fee payments with pre-authorization
+  type: addition
+  breaking: false
+- date: '2026-02-16'
+  title: Your rules, front and center
+  type: addition
+  breaking: false
+- date: '2026-02-16'
+  title: Improved inventory
+  type: change
+  breaking: false

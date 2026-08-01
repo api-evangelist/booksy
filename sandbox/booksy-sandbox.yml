@@ -1,0 +1,24 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+environments:
+- name: sandbox
+  base_url: issued to the partner during onboarding (not published)
+  credentials: a separate RSA private key is issued for sandbox
+- name: production
+  base_url_pattern: https://<country_code>.booksy.com/public-api/<country_code>/
+  credentials: a separate RSA private key is issued for production
+separation:
+  style: separate base URL and separate partner key pair per environment
+  documented_as: >-
+    "Depending whenever you use sandbox link or production, base API URL might
+    differ, so in code example we will use {base_url} notation for this." and "make
+    sure you have appropriate private key (separate for sandbox, separate for
+    production)".
+self_service: false
+test_values_published: false
+test_values_note: >-
+  Booksy publishes no magic test identifiers, test cards or fixture triggers for the
+  Public API. Sandbox base URL and keys are handed out during partner onboarding, so
+  nothing testable is available anonymously — no test values are invented here.
+console: false

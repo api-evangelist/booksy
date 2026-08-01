@@ -1,0 +1,67 @@
+# Booksy
+
+> Booksy is a beauty, wellness and health services platform combining a consumer appointment marketplace with Booksy Biz, a subscription business-management app for salons, barbershops, spas, nail studios and independent service providers. Booksy operates a partner-facing REST API — the Booksy Public API — for managing businesses, staff, services, schedules, customers and appointments, plus an appointment webhook.
+
+Provenance: generated 2026-07-31 by the API Evangelist enrichment pipeline from this repository's apis.yml and artifacts. Booksy publishes no llms.txt of its own (docs.booksy.com is HTTP Basic gated).
+
+## APIs
+
+- [Booksy Public API](https://docs.booksy.com/): Partner REST API. Base URL pattern https://<country_code>.booksy.com/public-api/<country_code>/ (for example https://us.booksy.com/public-api/us/). 96 documented endpoints across 21 resources. Versioned with an Accept header carrying `application/json; version=0.3`.
+
+## Authentication
+
+- Partner-issued RSA key pair signs an RS256 JWT assertion (claims iss/iat/exp/aud, aud = partner UUID), POSTed with `partner_name` to `{base_url}/token/`.
+- The exchange returns an access token (5 minute lifetime) and a refresh token (3 day lifetime).
+- Requests carry `Authorization: Bearer <access>`. Anonymous calls return HTTP 401 `{"detail":"Authentication credentials were not provided."}`.
+- Separate private keys are issued for sandbox and for production. There is no self-service signup for API access.
+
+## Conventions
+
+- Versioning: Accept header media-type parameter; versions 0.1, 0.2, 0.3 (0.3 current).
+- Pagination: `offset` and `limit` query parameters on collection endpoints.
+- Filtering: `booked_from`/`booked_till`, `date_from`/`date_to`, `created_before`/`created_after`, `imported`.
+- External identifiers: `import_uid` on imported objects, plus `mapping/` endpoints that resolve a partner identifier to a Booksy object.
+- Idempotency: no idempotency-key contract is published.
+- Errors: vendor-shaped JSON, not RFC 9457. Documented statuses 400, 401, 403, 404, 405, 406, 409, 422, 429, 500, 502, 503, 504.
+- Rate limits: 10 requests/minute unauthenticated, 200 requests/minute authenticated; exceeded returns HTTP 429.
+
+## Resources
+
+business, business_category, business_amenity, business_schedule, traveling_to_customer, region, user, resource (staff or appliance), resource_photo, resource_schedule, resource_time_off, service, service_variant, service_photo, service_category, consent_form, customer, appointment, subbooking, appointment_consent, appointment_review, review.
+
+## Events
+
+- Appointment webhook — HTTP POST to a partner endpoint on `CREATED`, `MODIFIED`, `CANCELLED`. Partner must answer HTTP 200; failures retry with exponential backoff at 5, 10, 20 and 40 minutes, then stop. No AsyncAPI document is published.
+
+## Specs
+
+- No OpenAPI, Swagger, GraphQL, AsyncAPI, MCP server or A2A agent card is published by Booksy as of 2026-07-31. All probes are recorded in `conformance/booksy-conformance.yml` and `well-known/booksy-well-known.yml`.
+
+## Repository artifacts
+
+- authentication/booksy-authentication.yml — auth profile
+- conventions/booksy-conventions.yml — cross-cutting request/response semantics
+- errors/booksy-error-codes.yml — error catalog and observed envelopes
+- rate-limits/booksy-rate-limits.yml — published rate limits
+- asyncapi/booksy-appointment-webhooks.yml — webhook catalog
+- data-model/booksy-data-model.yml — entity graph and endpoint inventory
+- lifecycle/booksy-lifecycle.yml — versioning, status page
+- changelog/booksy-changelog.yml — Booksy Biz release notes
+- plans/booksy-plans.yml — published pricing
+- sandbox/booksy-sandbox.yml — sandbox vs production separation
+- conformance/booksy-conformance.yml — standards conformance
+- security/booksy-domain-security.yml — TLS/HSTS/DNS posture
+- security/booksy-trust-center.yml — trust center
+
+## Docs
+
+- [Booksy Public API docs](https://docs.booksy.com/) (HTTP Basic gated — credentials issued to partners)
+- [Booksy Biz](https://biz.booksy.com/)
+- [Pricing](https://biz.booksy.com/pricing)
+- [What's new](https://biz.booksy.com/whats-new)
+- [Help center](https://help.booksy.com/hc/en-us)
+- [Blog](https://blog.booksy.com/us/)
+- [Status](https://status.booksy.com/)
+- [Trust center](https://trust.booksy.com/)
+- [Terms of service](https://booksy.com/en-us/p/terms)
+- [Privacy policy](https://booksy.com/en-us/p/privacy)

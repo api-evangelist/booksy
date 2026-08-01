@@ -1,0 +1,32 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+docs: https://docs.booksy.com/
+note: >-
+  Captured from the published "Rate limits" section of the Booksy Public API
+  reference (docs.booksy.com is HTTP Basic gated; identical rendering read from
+  https://web.archive.org/web/20220706184310/https://alpha.docs.booksy.net/).
+scope: per account
+exceeded_status: 429
+rate_limits:
+- name: Unauthenticated requests
+  limit_count: 10
+  period: minute
+  applies_to: token issuance and other unauthenticated calls
+  example_request: Fetching token
+- name: Authenticated requests
+  limit_count: 200
+  period: minute
+  applies_to: all authenticated API calls
+  example_request: Managing appointments, services, etc.
+response_headers: []
+headers_documented: false
+increase:
+  available: true
+  how: contact Booksy to request higher rate limits
+guidance:
+- Optimize your code to only get the data that your system requires.
+- Use caching for data that your system uses often.
+- Regulate the rate of your requests for smoother distribution.
+- Your code should stop making additional API requests until enough time has passed
+  to retry.

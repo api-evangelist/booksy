@@ -1,0 +1,86 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Booksy publishes no AsyncAPI document for its event surface. This artifact is the
+  webhook catalog as documented in the Booksy Public API reference; nothing here is
+  synthesized into a spec.
+delivery:
+  direction: Booksy to partner
+  transport: HTTP POST to a partner-supplied endpoint
+  payload_semantics: >-
+    Webhook payload should be treated as a notification — the partner is expected to
+    read back the authoritative object from the API.
+  expected_response: HTTP 200
+  retry:
+    strategy: exponential backoff
+    delays_after_first_attempt:
+    - 5 minutes
+    - 10 minutes
+    - 20 minutes
+    - 40 minutes
+    on_exhaustion: >-
+      After the last failed attempt the system stops sending notifications and
+      conflicts must be resolved manually.
+  signing: not documented
+  configuration: arranged during partner onboarding; no self-service subscription
+    endpoint is documented
+events:
+- name: Appointment webhook
+  description: Notifies the partner after appointment creation, modification or
+    cancellation.
+  payload_fields:
+  - name: action
+    type: enum
+    required: true
+    description: Type of action of the appointment webhook
+  - name: appointment
+    type: appointment
+    required: true
+    description: Appointment related to the webhook
+  actions:
+  - code: CREATED
+    meaning: Appointment was created
+  - code: MODIFIED
+    meaning: Appointment or related data was modified
+  - code: CANCELLED
+    meaning: Appointment was cancelled
+  payload_shape:
+    appointment:
+    - id
+    - business_id
+    - booked_for_id
+    - booked_from
+    - booked_till
+    - status
+    - type
+    - customer_name
+    - customer_phone
+    - customer_email
+    - customer_note
+    - business_note
+    - business_timezone
+    - import_uid
+    - subbookings
+    - traveling
+    subbooking:
+    - id
+    - booked_from
+    - booked_till
+    - staffer_id
+    - appliance_id
+    - service_variant_id
+    - service_name
+    traveling:
+    - price
+    - formatted_price
+    - address_line_1
+    - address_line_2
+    - apartment_number
+    - city
+    - zipcode
+    - longitude
+    - latitude
+    - policy

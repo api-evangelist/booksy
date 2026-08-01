@@ -1,0 +1,53 @@
+generated: '2026-07-31'
+method: searched
+source: https://biz.booksy.com/pricing
+currency: USD
+region: US
+model: subscription plus per-seat add-on plus transactional payment processing
+note: >-
+  Booksy Biz is sold as a single subscription tier with per-team-member add-ons; the
+  Booksy Public API is a partner integration and is not sold as a metered API plan,
+  so no API-specific price list is published.
+plans:
+- name: Booksy Biz — Single User
+  plan_count: 1
+  price: 29.99
+  currency: USD
+  period: month
+  note: plus tax; includes online booking, calendar and scheduling, client
+    management, marketing tools, payments, reports and digital loyalty cards
+  commitment: none, cancel anytime
+  trial:
+    available: true
+    length: 14 days
+    credit_card_required: false
+- name: Additional team member
+  price: 20.0
+  currency: USD
+  period: month
+  unit: per additional staff member
+payment_processing:
+- name: Mobile Payments and Keyed Entry
+  rate: 2.69% + $0.30 per transaction
+- name: Booksy Card Reader
+  rate: 2.49% + $0.10 per transaction
+- name: Tap to Pay
+  rate: 2.49% + $0.20 per transaction
+payouts:
+- name: Next business day payouts
+  fee: free
+- name: Fast payouts (30 minutes)
+  fee: 1.5%
+hardware:
+- name: BBPOS WisePOS E
+  price: 219.85
+  currency: USD
+  note: plus shipping
+- name: Stripe Reader M2
+  price: 53.1
+  currency: USD
+  note: plus shipping
+marketing:
+- name: Boost
+  fee: no monthly fee; one-time 30% fee based on the cost of a first-time client's
+    visit

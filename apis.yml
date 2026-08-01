@@ -1,18 +1,86 @@
 aid: booksy
 name: Booksy
-description: 'Booksy is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: Booksy is a beauty, wellness and health services platform that pairs a
+  consumer appointment marketplace (booksy.com) with Booksy Biz, a subscription business-management
+  application for salons, barbershops, spas, nail studios, tattoo artists, massage
+  therapists and other independent service providers. The platform covers online booking,
+  calendar and staff scheduling, client records, inventory, no-show protection, digital
+  loyalty cards, marketing tools such as Boost, reviews, and integrated card payments
+  including a Booksy Card Reader and Tap to Pay. Booksy also operates the Booksy Public
+  API, a partner-facing REST API documented at docs.booksy.com that exposes businesses,
+  business categories and amenities, business and staff schedules, resources (staff
+  and appliances), services, service variants, service categories, service and staff
+  photos, consent forms, customers, appointments and appointment status transitions,
+  appointment consents, reviews and review statistics, plus an appointment webhook.
+  The API is versioned through an Accept header, authenticates with partner-issued
+  RSA key pairs exchanged for short-lived JWT access tokens, and is served per country
+  from https://<country_code>.booksy.com/public-api/<country_code>/.
+type: Index
+image: https://cdn.prod.website-files.com/65ce807a7f0051db5b622a45/65dc8ce6b51696ab4e375751_Logo.svg
+tags:
+- Beauty
+- Wellness
+- Booking
+- Appointments
+- Scheduling
+- Marketplace
+- Salons
+- Barbershops
+- Spas
+- Payments
+- Small Business
+- Webhooks
 url: https://raw.githubusercontent.com/api-evangelist/booksy/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-07-31'
 modified: '2026-07-31'
-tags:
-- Company
-apis: []
+apis:
+- aid: booksy:booksy-public-api
+  name: Booksy Public API
+  description: The Booksy Public API is a partner-facing REST API for managing Booksy
+    businesses and their booking data. It is organized around resource-oriented URLs,
+    returns JSON, uses standard HTTP verbs and status codes, and is versioned with
+    an Accept header carrying "application/json; version=0.3". Partners authenticate with an
+    RSA key pair (separate keys for sandbox and production), signing a short-lived
+    RS256 JWT assertion that is exchanged at /token/ for a 5-minute access token and
+    a 3-day refresh token. The documented surface covers 96 endpoints across business,
+    business category, business amenities, business schedule, traveling-to-customer,
+    region reverse geocoding, users, resources, resource photos, resource schedules,
+    resource time off, services, service variants, service photos, service categories,
+    consent forms, customers, appointments, appointment consents, appointment reviews
+    and review statistics, plus an appointment webhook delivered to the partner.
+  humanURL: https://docs.booksy.com/
+  baseURL: https://us.booksy.com/public-api/us/
+  tags:
+  - Appointments
+  - Booking
+  - Scheduling
+  - Customers
+  - Reviews
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://docs.booksy.com/
+  - type: APIReference
+    url: https://docs.booksy.com/v01.html
+  - type: Authentication
+    url: authentication/booksy-authentication.yml
+  - type: Conventions
+    url: conventions/booksy-conventions.yml
+  - type: ErrorCatalog
+    url: errors/booksy-error-codes.yml
+  - type: RateLimits
+    url: rate-limits/booksy-rate-limits.yml
+  - type: Webhooks
+    url: asyncapi/booksy-appointment-webhooks.yml
+  - type: DataModel
+    url: data-model/booksy-data-model.yml
+  - type: Sandbox
+    url: sandbox/booksy-sandbox.yml
+  - type: Lifecycle
+    url: lifecycle/booksy-lifecycle.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +88,59 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/booksy_stock/
+  url: https://booksy.com/en-us/
+- type: DeveloperPortal
+  url: https://docs.booksy.com/
+- type: Documentation
+  url: https://docs.booksy.com/
+- type: APIReference
+  url: https://docs.booksy.com/v01.html
+- type: Blog
+  url: https://blog.booksy.com/us/
+- type: Support
+  url: https://help.booksy.com/hc/en-us
+- type: Pricing
+  url: https://biz.booksy.com/pricing
+- type: SignUp
+  url: https://biz.booksy.com/
+- type: TermsOfService
+  url: https://booksy.com/en-us/p/terms
+- type: PrivacyPolicy
+  url: https://booksy.com/en-us/p/privacy
+- type: StatusPage
+  url: https://status.booksy.com/
+- type: TrustCenter
+  url: https://trust.booksy.com/
+- type: ChangeLog
+  url: https://biz.booksy.com/whats-new
+- type: Authentication
+  url: authentication/booksy-authentication.yml
+- type: Conventions
+  url: conventions/booksy-conventions.yml
+- type: ErrorCatalog
+  url: errors/booksy-error-codes.yml
+- type: RateLimits
+  url: rate-limits/booksy-rate-limits.yml
+- type: Plans
+  url: plans/booksy-plans.yml
+- type: Lifecycle
+  url: lifecycle/booksy-lifecycle.yml
+- type: ChangeLog
+  url: changelog/booksy-changelog.yml
+- type: Webhooks
+  url: asyncapi/booksy-appointment-webhooks.yml
+- type: DataModel
+  url: data-model/booksy-data-model.yml
+- type: Sandbox
+  url: sandbox/booksy-sandbox.yml
+- type: Conformance
+  url: conformance/booksy-conformance.yml
+- type: DomainSecurity
+  url: security/booksy-domain-security.yml
+- type: LLMsTxt
+  url: llms/booksy-llms.txt
+x-enrichment:
+  date: '2026-07-31'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

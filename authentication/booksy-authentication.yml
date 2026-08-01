@@ -1,0 +1,75 @@
+generated: '2026-07-31'
+method: searched
+source: https://docs.booksy.com/v01.html
+docs: https://docs.booksy.com/
+note: >-
+  The live Booksy Public API docs host (docs.booksy.com) is served behind HTTP Basic
+  authentication (CloudFront returns 401 with WWW-Authenticate: Basic to anonymous
+  clients), so the authentication model below was captured from the identical
+  publicly archived rendering of the same documentation at
+  https://web.archive.org/web/20220706184310/https://alpha.docs.booksy.net/ and
+  corroborated against live 401 challenges from the production API host.
+summary:
+  types:
+  - http
+  api_key_in: []
+  oauth2_flows: []
+  model: partner-issued RSA key pair signs an RS256 JWT assertion which is exchanged
+    for a short-lived bearer access token
+schemes:
+- name: partnerJwtAssertion
+  type: assertion
+  algorithm: RS256
+  description: >-
+    Before calling the API a partner signs a JWT with its own RSA private key
+    (separate private keys are issued for sandbox and for production). The claim set
+    is iss (https://public-api.booksy.com), iat, exp and aud (the partner UUID); the
+    JOSE header carries typ JWT and alg RS256. The signed assertion is POSTed to
+    {base_url}/token/ together with partner_name.
+  token_endpoint: "{base_url}/token/"
+  sources:
+  - https://docs.booksy.com/v01.html
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    All API requests carry the access token in an Authorization header of the form
+    "Bearer <access>". Anonymous requests to the production host return HTTP 401
+    with body {"detail":"Authentication credentials were not provided."}.
+  sources:
+  - https://docs.booksy.com/v01.html
+  - https://us.booksy.com/public-api/us/business/
+tokens:
+  access_token_lifetime: 5 minutes
+  refresh_token_lifetime: 3 days
+  refresh:
+    description: >-
+      A refresh token is exchanged for a new access token so credentials are not
+      re-sent on every expiry. Documented under "Refresh token".
+credentials:
+  issuance: partner onboarding — Booksy issues a partner UUID, a partner name and an
+    RSA private key per environment
+  self_service: false
+  public_signup: false
+unverified_claims:
+- claim: >-
+    Third-party indexes of the current docs.booksy.com pages also describe an OAuth2
+    authorization-code flow with redirect_uri/state and refresh tokens for
+    user-approved requests.
+  status: unverified
+  reason: docs.booksy.com is HTTP Basic gated; no anonymous fetch could confirm an
+    oauth2 scheme, so no OAuth2 scheme or scope set is asserted here.
+x-evidence:
+- fetched: '2026-07-31'
+  url: https://docs.booksy.com/
+  http_status: 401
+  note: WWW-Authenticate Basic
+- fetched: '2026-07-31'
+  url: https://us.booksy.com/public-api/us/business/
+  http_status: 401
+  body: '{"detail":"Authentication credentials were not provided."}'
+- fetched: '2026-07-31'
+  url: https://us.booksy.com/public-api/us/token/
+  http_status: 405
+  body: '{"detail":"Method \"get\" not allowed."}'

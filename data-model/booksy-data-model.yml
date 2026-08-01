@@ -1,0 +1,408 @@
+generated: '2026-07-31'
+method: derived
+source: https://docs.booksy.com/v01.html
+derivation: >-
+  Derived from the published Booksy Public API object reference and its documented
+  HTTP request lines (96 unique method + path pairs across 21 documented resources).
+  docs.booksy.com is HTTP Basic gated; the identical rendering was read from
+  https://web.archive.org/web/20220706184310/https://alpha.docs.booksy.net/. Booksy
+  publishes no OpenAPI, so schemas here are the field/relationship shapes named in
+  the reference, not a transcribed spec.
+base_url_pattern: https://<country_code>.booksy.com/public-api/<country_code>/
+id_style: integer surrogate ids, with a partner-supplied import_uid on imported
+  objects and dedicated "mapping" endpoints to resolve partner identifiers
+root_entity: business
+entities:
+- name: business
+  description: A Booksy business (salon, barbershop, spa, studio) and the root of
+    almost every path in the API.
+  endpoints:
+  - GET /business/
+  - GET /business/<business_id>/
+  - POST /business/
+  - POST /business/mapping/
+  - PUT|PATCH /business/<business_id>/
+  - PATCH /business/<business_id>/activate/
+  - PATCH /business/<business_id>/deactivate/
+  enums:
+    status:
+    - S Setup
+    - T Trial
+    - P Paid
+    - O Overdue payment
+    - L Blocked after overdue payment
+    - H Suspended
+    - R Churned
+    - B Blocked
+    booking_mode:
+    - A Automatic
+    - M Manual
+    - S Semi-automatic
+    sms_notification_status:
+    - D Disabled
+    - P Pending
+    - E Enabled
+    sms_notification_preference:
+    - O Only push
+    - P Prefer push
+    - S Only SMS
+- name: business_category
+  description: Booksy-wide category taxonomy and the categories assigned to a
+    business, including one primary category.
+  endpoints:
+  - GET /business_category/
+  - GET /business/<business_id>/category/
+  - PUT /business/<business_id>/category/<category_id>/
+  - DELETE /business/<business_id>/category/<category_id>/
+  - GET /business/<business_id>/primary_category/
+  - PUT /business/<business_id>/primary_category/<category_id>/
+  enums:
+    type:
+    - C Category
+    - T Treatment
+- name: business_amenity
+  description: Amenity flags advertised on a business profile.
+  endpoints:
+  - GET /business/<business_id>/amenities/
+  - POST /business/<business_id>/amenities/
+  - PUT /business/<business_id>/amenities/
+  - DELETE /business/<business_id>/amenities/
+  enums:
+    key:
+    - parking
+    - credit_cards
+    - wheelchair_access
+    - kids
+    - animals
+    - wifi
+    - loyalty
+- name: business_schedule
+  description: Default weekly opening hours plus per-date custom schedules.
+  endpoints:
+  - GET /business/<business_id>/schedule/default/
+  - PUT /business/<business_id>/schedule/default/
+  - GET /business/<business_id>/schedule/custom/
+  - GET /business/<business_id>/schedule/custom/<date>/
+  - PUT /business/<business_id>/schedule/custom/<date>/
+- name: traveling_to_customer
+  description: Mobile-service settings — whether and how far a business travels to
+    the customer, and the fee policy.
+  endpoints:
+  - GET /business/<business_id>/traveling_to_customer/
+  - PUT|PATCH /business/<business_id>/traveling_to_customer/
+  - DELETE /business/<business_id>/traveling_to_customer/
+- name: region
+  description: Geographic region resolved from coordinates.
+  endpoints:
+  - GET /region_reverse_geocoding/
+  enums:
+    type:
+    - country
+    - state
+    - region
+    - voivodeship
+    - metropolis
+    - county
+    - community
+    - city
+    - borough
+    - neighborhood
+    - village
+    - zip
+- name: user
+  description: A Booksy account attached to a business as owner or staffer.
+  endpoints:
+  - POST /business/<business_id>/user/owner/
+  - POST /business/<business_id>/user/staffer/
+- name: resource
+  description: A bookable resource — either a staff member or an appliance such as a
+    room or chair.
+  endpoints:
+  - GET /business/<business_id>/resource/
+  - GET /business/<business_id>/resource/<resource_id>/
+  - POST /business/<business_id>/resource/
+  - POST /business/<business_id>/staff_email/
+  - POST /business/<business_id>/resource/staff_email/
+  - PUT|PATCH /business/<business_id>/resource/<resource_id>/
+  - DELETE /business/<business_id>/resource/<resource_id>/
+  enums:
+    type:
+    - S Staff
+    - R Appliance
+- name: resource_photo
+  endpoints:
+  - GET /business/<business_id>/resource/<resource_id>/photo/
+  - PUT /business/<business_id>/resource/<resource_id>/photo/
+  - DELETE /business/<business_id>/resource/<resource_id>/photo/
+- name: resource_schedule
+  endpoints:
+  - GET /business/<business_id>/schedule/resource/<resource_id>/default/
+  - PUT /business/<business_id>/schedule/resource/<resource_id>/default/
+  - GET /business/<business_id>/schedule/resource/<resource_id>/custom/
+  - GET /business/<business_id>/schedule/resource/<resource_id>/custom/<date>/
+  - PUT /business/<business_id>/schedule/resource/<resource_id>/custom/<date>/
+- name: resource_time_off
+  description: Absence blocks for staff and appliances.
+  endpoints:
+  - GET /business/<business_id>/schedule/resource/<resource_id>/time_off/
+  - GET /business/<business_id>/schedule/resource/<resource_id>/time_off/<time_off_id>/
+  - POST /business/<business_id>/schedule/resource/<resource_id>/time_off/
+  - PUT|PATCH /business/<business_id>/schedule/resource/<resource_id>/time_off/<time_off_id>/
+  - DELETE /business/<business_id>/schedule/resource/<resource_id>/time_off/<time_off_id>/
+  enums:
+    staffer_reason:
+    - personal_day
+    - sick_day
+    - vacation
+    - training
+    - no_show
+    - late
+    - early
+    - other
+    appliance_reason:
+    - day_off
+    - holiday
+    - maintenance
+    - break
+    - other
+- name: service
+  description: A bookable service offered by a business.
+  endpoints:
+  - GET /business/<business_id>/service/
+  - GET /business/<business_id>/service/<service_id>/
+  - POST /business/<business_id>/service/
+  - POST /business/<business_id>/service/mapping/
+  - POST /business/<business_id>/service/<service_id>/duplicate/
+  - PUT|PATCH /business/<business_id>/service/<service_id>/
+  - DELETE /business/<business_id>/service/<service_id>/
+  enums:
+    price_type:
+    - X Fixed price
+    - V Varies
+    - D Don't show
+    - F Free
+    - S Price starts at
+    - C Combo price
+    padding_time_type:
+    - A After
+    - B Before
+    - C Both before and after
+- name: service_variant
+  description: A priced, timed variant of a service.
+  endpoints:
+  - GET /business/<business_id>/service/<service_id>/variant/
+  - GET /business/<business_id>/service/<service_id>/variant/<variant_id>/
+  - POST /business/<business_id>/service/<service_id>/variant/
+  - PUT|PATCH /business/<business_id>/service/<service_id>/variant/<variant_id>/
+  - DELETE /business/<business_id>/service/<service_id>/variant/<variant_id>/
+  enums:
+    type:
+    - X Fixed price
+    - F Free price
+    - D Don't show price
+    - V Varies price
+    - S Price starts at
+- name: service_photo
+  endpoints:
+  - GET /business/<business_id>/service/<service_id>/photo/
+  - GET /business/<business_id>/service/<service_id>/photo/<photo_id>/
+  - POST /business/<business_id>/service/<service_id>/photo/
+  - PUT|PATCH /business/<business_id>/service/<service_id>/photo/<photo_id>/
+  - DELETE /business/<business_id>/service/<service_id>/photo/<photo_id>/
+- name: service_category
+  endpoints:
+  - GET /business/<business_id>/service_category/
+  - GET /business/<business_id>/service_category/<service_category_id>/
+  - POST /business/<business_id>/service_category/
+  - POST /business/<business_id>/service_category/mapping/
+  - PUT|PATCH /business/<business_id>/service_category/<service_category_id>/
+  - DELETE /business/<business_id>/service_category/<service_category_id>/
+  enums:
+    visibility:
+    - 0 Hide all services
+    - 5 Show first 5 services
+    - -1 Show all services
+- name: consent_form
+  description: Consent forms a business attaches to bookings.
+  endpoints:
+  - GET /business/<business_id>/consent_form/
+  - GET /business/<business_id>/consent_form/<consent_form_id>/
+  - POST /business/<business_id>/consent_form/
+  - PUT|PATCH /business/<business_id>/consent_form/<consent_form_id>/
+  - DELETE /business/<business_id>/consent_form/<consent_form_id>/
+  enums:
+    field_type:
+    - text
+    - checkbox
+    - input
+- name: customer
+  description: A client record held by a business.
+  endpoints:
+  - GET /business/<business_id>/customer/
+  - GET /business/<business_id>/customer/<customer_id>/
+  - POST /business/<business_id>/customer/
+  - PUT|PATCH /business/<business_id>/customer/<customer_id>/
+  - DELETE /business/<business_id>/customer/<customer_id>/
+- name: appointment
+  description: A booking, composed of one or more subbookings, each bound to a staffer,
+    an optional appliance and a service variant.
+  endpoints:
+  - GET /business/<business_id>/appointment/
+  - GET /business/<business_id>/appointment/<appointment_id>/
+  - POST /business/<business_id>/appointment/
+  - POST /business/<business_id>/appointment/mapping/
+  - PUT /business/<business_id>/appointment/<appointment_id>/
+  - PATCH /business/<business_id>/appointment/<appointment_id>/status/confirm/
+  - PATCH /business/<business_id>/appointment/<appointment_id>/status/decline/
+  - PATCH /business/<business_id>/appointment/<appointment_id>/status/cancel/
+  - PATCH /business/<business_id>/appointment/<appointment_id>/status/finish/
+  - PATCH /business/<business_id>/appointment/<appointment_id>/status/no_show/
+  enums:
+    status:
+    - A Accepted by business
+    - C Cancelled
+    - D Declined
+    - F Finished
+    - M Modified by customer
+    - N No-show
+    - P Proposed by staff
+    - W Waiting for confirmation by business
+    type:
+    - B Created by business
+    - C Created by customer
+    - R Resource time reservation
+- name: subbooking
+  description: A line on an appointment binding one service variant to a staffer, an
+    optional appliance and a time window. Not independently addressable.
+  endpoints: []
+- name: appointment_consent
+  endpoints:
+  - GET /business/<business_id>/appointment/<appointment_id>/consent/
+- name: appointment_review
+  endpoints:
+  - GET /business/<business_id>/appointment/<appointment_id>/review/
+  - PUT|PATCH /business/<business_id>/appointment/<appointment_id>/review/
+  - DELETE /business/<business_id>/appointment/<appointment_id>/review/
+- name: review
+  description: Review list plus aggregate statistics for a business.
+  endpoints:
+  - GET /business/<business_id>/review_statistics/
+  fields:
+  - average_rank
+  - total
+  - total_positive
+  - total_neutral
+  - total_negative
+  - reviews
+relationships:
+- from: business
+  to: business_category
+  kind: has_many
+  via: category
+- from: business
+  to: business_category
+  kind: has_one
+  via: primary_category
+- from: business
+  to: business_amenity
+  kind: has_many
+  via: amenities
+- from: business
+  to: business_schedule
+  kind: has_many
+  via: schedule
+- from: business
+  to: traveling_to_customer
+  kind: has_one
+  via: traveling_to_customer
+- from: business
+  to: resource
+  kind: has_many
+  via: resource
+- from: business
+  to: service
+  kind: has_many
+  via: service
+- from: business
+  to: service_category
+  kind: has_many
+  via: service_category
+- from: business
+  to: consent_form
+  kind: has_many
+  via: consent_form
+- from: business
+  to: customer
+  kind: has_many
+  via: customer
+- from: business
+  to: appointment
+  kind: has_many
+  via: appointment
+- from: business
+  to: user
+  kind: has_many
+  via: user
+- from: resource
+  to: resource_photo
+  kind: has_one
+  via: photo
+- from: resource
+  to: resource_schedule
+  kind: has_many
+  via: schedule
+- from: resource
+  to: resource_time_off
+  kind: has_many
+  via: time_off
+- from: service
+  to: service_variant
+  kind: has_many
+  via: variant
+- from: service
+  to: service_photo
+  kind: has_many
+  via: photo
+- from: service
+  to: service_category
+  kind: belongs_to
+  via: service_category_id
+- from: appointment
+  to: subbooking
+  kind: has_many
+  via: subbookings
+- from: appointment
+  to: customer
+  kind: belongs_to
+  via: booked_for_id
+- from: appointment
+  to: appointment_consent
+  kind: has_many
+  via: consent
+- from: appointment
+  to: appointment_review
+  kind: has_one
+  via: review
+- from: appointment
+  to: traveling_to_customer
+  kind: has_one
+  via: traveling
+- from: subbooking
+  to: resource
+  kind: belongs_to
+  via: staffer_id
+- from: subbooking
+  to: resource
+  kind: belongs_to
+  via: appliance_id
+- from: subbooking
+  to: service_variant
+  kind: belongs_to
+  via: service_variant_id
+- from: review
+  to: appointment
+  kind: belongs_to
+  via: appointment
+counts:
+  entities: 22
+  documented_endpoints: 96
