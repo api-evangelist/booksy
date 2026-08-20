@@ -29,6 +29,19 @@ tags:
 - Spas
 - Payments
 - Small Business
+- Webhook
+tags_raw:
+- Beauty
+- Wellness
+- Booking
+- Appointments
+- Scheduling
+- Marketplace
+- Salons
+- Barbershops
+- Spas
+- Payments
+- Small Business
 - Webhooks
 url: https://raw.githubusercontent.com/api-evangelist/booksy/refs/heads/main/apis.yml
 x-type: company
@@ -54,6 +67,13 @@ apis:
   humanURL: https://docs.booksy.com/
   baseURL: https://us.booksy.com/public-api/us/
   tags:
+  - Appointments
+  - Booking
+  - Scheduling
+  - Customers
+  - Reviews
+  - Webhook
+  tags_raw:
   - Appointments
   - Booking
   - Scheduling
