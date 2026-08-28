@@ -16,6 +16,17 @@ description: Booksy is a beauty, wellness and health services platform that pair
   RSA key pairs exchanged for short-lived JWT access tokens, and is served per country
   from https://<country_code>.booksy.com/public-api/<country_code>/.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/65ce807a7f0051db5b622a45/65dc8ce6b51696ab4e375751_Logo.svg
 tags:
 - Beauty
