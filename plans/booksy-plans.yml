@@ -51,3 +51,25 @@ marketing:
 - name: Boost
   fee: no monthly fee; one-time 30% fee based on the cost of a first-time client's
     visit
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Booksy Biz — Single User
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Additional team member
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
