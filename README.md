@@ -64,49 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Booksy is a beauty, wellness and health services platform that pairs a consumer appointment marketplace (booksy.com) with **Booksy Biz**, a subscription business-management application for salons, barbershops, spas, nail studios, tattoo artists and other independent service providers — online booking, calendar and staff scheduling, client records, inventory, no-show protection, loyalty, marketing and integrated card payments.
+Booksy is a beauty, wellness and health services platform that pairs a consumer appointment marketplace (booksy.com) with Booksy Biz, a subscription business-management application for salons, barbershops, spas, nail studios, tattoo artists, massage therapists and other independent service providers. The platform covers online booking, calendar and staff scheduling, client records, inventory, no-show protection, digital loyalty cards, marketing tools such as Boost, reviews, and integrated card payments including a Booksy Card Reader and Tap to Pay. Booksy also operates the Booksy Public API, a partner-facing REST API documented at docs.booksy.com that exposes businesses, business categories and amenities, business and staff schedules, resources (staff and appliances), services, service variants, service categories, service and staff photos, consent forms, customers, appointments and appointment status transitions, appointment consents, reviews and review statistics, plus an appointment webhook. The API is versioned through an Accept header, authenticates with partner-issued RSA key pairs exchanged for short-lived JWT access tokens, and is served per country from https://<country_code>.booksy.com/public-api/<country_code>/.
 
-Booksy also operates the **Booksy Public API**, a partner-facing REST API documented at [docs.booksy.com](https://docs.booksy.com/).
+**Areas:** Beauty · Wellness · Booking · Appointments · Scheduling · Marketplace · Salon · Barbershops · Spas · Payments · Small Business · Webhook
 
-## API at a glance
+## Booksy on APIs.io
 
-| | |
+Everything profiled for Booksy is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/booksy/](https://apis.io/providers/booksy/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Booksy Public API](https://apis.io/apis/booksy/booksy-public-api/) — The Booksy Public API is a partner-facing REST API for managing Booksy businesses and their booking data. It is organized around resource-oriented URLs,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Booksy Appointment Webhooks](https://apis.io/asyncapis/booksy/booksy-appointment-webhooks/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Booksy Authentication](https://apis.io/security/booksy/booksy-authentication/)
+- [Booksy Domain Security](https://apis.io/security/booksy/booksy-domain-security/)
+- [Booksy Trust Center](https://apis.io/security/booksy/booksy-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Booksy Plans](https://apis.io/plans/booksy/booksy-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Booksy Rate Limits](https://apis.io/rate-limits/booksy/booksy-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://booksy.com/en-us/)
+- [Documentation](https://docs.booksy.com/)
+- [API reference](https://docs.booksy.com/v01.html)
+- [Pricing](https://biz.booksy.com/pricing)
+- [Sign up](https://biz.booksy.com/)
+- [Support](https://help.booksy.com/hc/en-us)
+- [Changelog](https://biz.booksy.com/whats-new)
+- [Blog](https://blog.booksy.com/us/)
+- [Trust centre](https://trust.booksy.com/)
+- [Terms of service](https://booksy.com/en-us/p/terms)
+- [Privacy policy](https://booksy.com/en-us/p/privacy)
+- [Status](https://status.booksy.com/)
+
+## API Evangelist rating
+
+**Kin Score 49.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| Base URL | `https://<country_code>.booksy.com/public-api/<country_code>/` (e.g. `https://us.booksy.com/public-api/us/`) |
-| Style | REST / JSON, resource-oriented, trailing-slash paths |
-| Versioning | `Accept: application/json; version=0.3` (0.1, 0.2, 0.3) |
-| Auth | Partner RSA key pair signs an RS256 JWT assertion, exchanged at `/token/` for a 5-minute access token + 3-day refresh token, sent as `Authorization: Bearer` |
-| Surface | 96 documented endpoints across 21 resources |
-| Events | Appointment webhook (`CREATED` / `MODIFIED` / `CANCELLED`) with 5/10/20/40-minute backoff |
-| Rate limits | 10 req/min unauthenticated, 200 req/min authenticated |
-| Machine-readable spec | none published (no OpenAPI, GraphQL, AsyncAPI, MCP or A2A agent card) |
-| Docs access | **HTTP Basic gated** — `docs.booksy.com` returns 401 to anonymous clients; credentials are issued to partners |
+| Discoverability | 73.2 |
+| Contract quality | 39.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 60.5 |
+| Developer ergonomics | 39.3 |
+| Access clarity | 73.7 |
 
-## Artifacts
+**Agent readiness 25.2** — agent-aware
 
-- `authentication/` — auth profile (partner JWT assertion + bearer)
-- `conventions/` — versioning, pagination, external identifiers, error envelope, rate-limit signalling
-- `errors/` — error catalog and observed response envelopes
-- `rate-limits/` — published request limits
-- `asyncapi/` — appointment webhook catalog
-- `data-model/` — entity graph and the full documented endpoint inventory
-- `lifecycle/` — versioning and status page
-- `changelog/` — Booksy Biz release notes
-- `plans/` — published Booksy Biz pricing and processing rates
-- `sandbox/` — sandbox vs production separation
-- `conformance/` — standards conformance and negative spec-discovery results
-- `security/` — domain security probe, trust center
-- `well-known/` — `/.well-known/` probe results (all misses, recorded)
-- `llms/` — llms.txt for agents
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
 
-## Links
+**Regulatory alignment 26.8** — Payments
 
-- Website — https://booksy.com/en-us/
-- Booksy Biz — https://biz.booksy.com/
-- API docs — https://docs.booksy.com/
-- Pricing — https://biz.booksy.com/pricing
-- What's new — https://biz.booksy.com/whats-new
-- Help center — https://help.booksy.com/hc/en-us
-- Blog — https://blog.booksy.com/us/
-- Status — https://status.booksy.com/
-- Trust center — https://trust.booksy.com/
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/booksy/](https://apis.io/providers/booksy/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Booksy: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/booksy/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
